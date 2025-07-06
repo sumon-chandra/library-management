@@ -7,7 +7,8 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Edit, Trash2Icon } from "lucide-react";
+import { Edit, ShoppingBag, Trash2Icon } from "lucide-react";
+import ActionButton from "./action-button";
 
 const BooksTable = ({ books }: { books: Book[] }) => {
   return (
@@ -24,12 +25,12 @@ const BooksTable = ({ books }: { books: Book[] }) => {
               <TableHead>Description</TableHead>
               <TableHead>Copies</TableHead>
               <TableHead>Available</TableHead>
-              <TableHead>Actions</TableHead>
+              <TableHead className="text-center">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {books.map((book, idx) => (
-              <TableRow key={book.id}>
+              <TableRow key={`${book.isbn}_${book.id}`}>
                 <TableCell>{idx + 1}</TableCell>
                 <TableCell>{book.title}</TableCell>
                 <TableCell>{book.author}</TableCell>
@@ -38,9 +39,14 @@ const BooksTable = ({ books }: { books: Book[] }) => {
                 <TableCell>{book.description}</TableCell>
                 <TableCell>{book.copies}</TableCell>
                 <TableCell>{book.available ? "Yes" : "No"}</TableCell>
-                <TableCell className="flex items-center gap-2">
-                  <Edit className="w-4 hover:text-green-700 cursor-pointer" />
-                  <Trash2Icon className="w-4 hover:text-red-700 cursor-pointer" />
+                <TableCell className="flex items-end gap-2">
+                  <ActionButton icon={<ShoppingBag />} actionLabel="Borrow Book" />
+                  <ActionButton icon={<Edit />} actionLabel="Edit Book" />
+                  <ActionButton
+                    icon={<Trash2Icon />}
+                    actionLabel="Delete Book"
+                    isDeleteButton
+                  />
                 </TableCell>
               </TableRow>
             ))}

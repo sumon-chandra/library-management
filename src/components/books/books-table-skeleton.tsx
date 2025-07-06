@@ -55,8 +55,9 @@ const BooksTableSkeleton = () => {
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
-                    <Skeleton className="h-8 w-8 rounded" />
-                    <Skeleton className="h-8 w-8 rounded" />
+                    <Skeleton className="size-8 rounded" />
+                    <Skeleton className="size-8 rounded" />
+                    <Skeleton className="size-8 rounded" />
                   </div>
                 </TableCell>
               </TableRow>
