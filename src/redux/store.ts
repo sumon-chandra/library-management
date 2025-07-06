@@ -1,7 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { booksApi } from "./features/books/api.books";
 
 export const store = configureStore({
-    reducer: {}
+    reducer: {
+        [booksApi.reducerPath]: booksApi.reducer
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(booksApi.middleware),
 })
 
 // Infer the 'RootState' and 'AppDispatch' types from the store itself

@@ -26,14 +26,16 @@ export default function Component() {
           </div>
         </SheetContent>
       </Sheet>
-      <Link to="/" className="mr-6 hidden lg:flex">
-        <MountainIcon className="h-6 w-6" />
-        <span className="sr-only">Acme Inc</span>
-      </Link>
-      <nav className="ml-auto hidden lg:flex gap-6">
-        {navLinks.map((link) => (
-          <NavLink key={link.to} to={link.to} label={link.label} />
-        ))}
+      <nav className="container mx-auto flex w-full items-center justify-between">
+        <Link to="/" className="mr-6 hidden lg:flex">
+          <MountainIcon className="h-6 w-6" />
+          <span className="sr-only">Acme Inc</span>
+        </Link>
+        <div className="ml-auto hidden lg:flex gap-6">
+          {navLinks.map((link) => (
+            <NavLink key={link.to} to={link.to} label={link.label} />
+          ))}
+        </div>
       </nav>
     </header>
   );

@@ -20,5 +20,14 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, './src'),
     }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://a3-libraryapi.vercel.app',
+        changeOrigin: true,
+        secure: true,
+      }
+    }
   }
 })
