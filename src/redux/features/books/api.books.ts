@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { GetBooksResponse } from "../../../types";
+import type { GetBookByIdResponse, GetBooksResponse } from "../../../types";
 export const booksApi = createApi({
     reducerPath: "booksApi",
     baseQuery: fetchBaseQuery({ baseUrl: "/api/" }),
@@ -8,7 +8,7 @@ export const booksApi = createApi({
             query: () => "books",
         }),
         // Get a single book by ID
-        getBookById: builder.query({
+        getBookById: builder.query<GetBookByIdResponse, string>({
             query: (bookId) => `books/${bookId}`,
         }),
         // Mutation to edit a book

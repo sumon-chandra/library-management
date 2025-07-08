@@ -16,3 +16,9 @@ export interface GetBooksResponse {
     message: string;
     data: Book[];
 }
+
+export interface GetBookByIdResponse {
+    success: boolean;
+    message: string;
+    data: Book;
+}
