@@ -32,7 +32,7 @@ const BookForm = ({ editMode, book }: BookFormProps) => {
     };
     try {
       // If in edit mode, we update the book, otherwise we can handle adding a new book here
-      const updateResult = await updateBook(bookData);
+      await updateBook(bookData);
       if (isUpdateSuccess) {
         toast.success("Book updated successfully!");
       }
