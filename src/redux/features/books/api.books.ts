@@ -7,7 +7,19 @@ export const booksApi = createApi({
         getBooks: builder.query<GetBooksResponse, void>({
             query: () => "books",
         }),
+        // Get a single book by ID
+        getBookById: builder.query({
+            query: (bookId) => `books/${bookId}`,
+        }),
+        // Mutation to edit a book
+        editBook: builder.mutation({
+            query: (book) => ({
+                url: `books/${book._id}`,
+                method: "PUT",
+                body: book,
+            }),
+        })
     })
 })
 
-export const { useGetBooksQuery } = booksApi
+export const { useGetBooksQuery, useEditBookMutation, useGetBookByIdQuery } = booksApi

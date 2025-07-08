@@ -9,8 +9,10 @@ import {
 } from "../ui/table";
 import { Edit, ShoppingBag, Trash2Icon } from "lucide-react";
 import ActionButton from "./action-button";
+import { useNavigate } from "@tanstack/react-router";
 
 const BooksTable = ({ books }: { books: Book[] }) => {
+  const navigate = useNavigate();
   return (
     <div className="w-full">
       <div className="rounded-md border">
@@ -30,7 +32,7 @@ const BooksTable = ({ books }: { books: Book[] }) => {
           </TableHeader>
           <TableBody>
             {books.map((book, idx) => (
-              <TableRow key={`${book.isbn}_${book.id}`}>
+              <TableRow key={`${book.isbn}_${book._id}`}>
                 <TableCell>{idx + 1}</TableCell>
                 <TableCell>{book.title}</TableCell>
                 <TableCell>{book.author}</TableCell>
@@ -41,7 +43,16 @@ const BooksTable = ({ books }: { books: Book[] }) => {
                 <TableCell>{book.available ? "Yes" : "No"}</TableCell>
                 <TableCell className="flex items-end gap-2">
                   <ActionButton icon={<ShoppingBag />} actionLabel="Borrow Book" />
-                  <ActionButton icon={<Edit />} actionLabel="Edit Book" />
+                  <ActionButton
+                    icon={<Edit />}
+                    actionLabel="Edit Book"
+                    onClick={() => {
+                      navigate({
+                        to: `/edit-book/${book._id}`,
+                        params: { bookId: book._id },
+                      });
+                    }}
+                  />
                   <ActionButton
                     icon={<Trash2Icon />}
                     actionLabel="Delete Book"
