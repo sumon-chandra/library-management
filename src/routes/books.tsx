@@ -9,7 +9,7 @@ export const Route = createFileRoute("/books")({
 });
 
 function Books() {
-  const { isLoading, isError, isSuccess, data } = useGetBooksQuery();
+  const { isLoading, isError, isSuccess, data, refetch } = useGetBooksQuery();
   return (
     <>
       {isLoading && <BooksTableSkeleton />}
@@ -26,7 +26,7 @@ function Books() {
               <Button className="cursor-pointer">Add Book</Button>
             </Link>
           </div>
-          <BooksTable books={data.data} />
+          <BooksTable books={data.data} refetch={refetch} />
         </div>
       )}
     </>

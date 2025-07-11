@@ -10,9 +10,42 @@ import {
 import { Edit, ShoppingBag, Trash2Icon } from "lucide-react";
 import ActionButton from "./action-button";
 import { useNavigate } from "@tanstack/react-router";
+import { useDeleteBookMutation } from "../../redux/features/books/api.books";
+import { toast } from "sonner";
 
-const BooksTable = ({ books }: { books: Book[] }) => {
+interface BookTableProps {
+  books: Book[];
+  refetch?: any;
+}
+
+const BooksTable = ({ books, refetch }: BookTableProps) => {
   const navigate = useNavigate();
+  const [deleteBook, { isError: failedDelete }] = useDeleteBookMutation();
+
+  const handleEdit = (id: string) => {
+    navigate({
+      to: `/edit-book/${id}`,
+      params: { bookId: id },
+    });
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteBook(id);
+
+      if (failedDelete) {
+        toast.error("Failed to delete the book. Please try again.");
+        return;
+      }
+
+      toast.success("Book deleted successfully!");
+      refetch();
+    } catch (error) {
+      toast.error("Something went wrong while deleting. Please try again");
+      console.log({ error });
+    }
+  };
+
   return (
     <div className="w-full">
       <div className="rounded-md border">
@@ -50,17 +83,13 @@ const BooksTable = ({ books }: { books: Book[] }) => {
                   <ActionButton
                     icon={<Edit />}
                     actionLabel="Edit Book"
-                    onClick={() => {
-                      navigate({
-                        to: `/edit-book/${book._id}`,
-                        params: { bookId: book._id },
-                      });
-                    }}
+                    onClick={() => handleEdit(book._id)}
                   />
                   <ActionButton
                     icon={<Trash2Icon />}
                     actionLabel="Delete Book"
                     isDeleteButton
+                    onClick={() => handleDelete(book._id)}
                   />
                 </TableCell>
               </TableRow>
