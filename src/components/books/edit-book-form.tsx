@@ -1,5 +1,8 @@
 import { toast } from "sonner";
-import { useEditBookMutation } from "../../redux/features/books/api.books";
+import {
+  useEditBookMutation,
+  useGetBooksQuery,
+} from "../../redux/features/books/api.books";
 import type { Book } from "../../types";
 import { Button } from "../ui/button";
 import { Loader } from "lucide-react";
@@ -14,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useNavigate } from "@tanstack/react-router";
 
 interface BookFormProps {
   book?: Book;
@@ -22,10 +26,10 @@ interface BookFormProps {
 type BookDataType = Omit<Book, "available" | "createdAt" | "updatedAt">;
 
 const EditBookForm = ({ book }: BookFormProps) => {
-  const [
-    updateBook,
-    { isSuccess: isUpdateSuccess, isLoading: isUpdating, isError: isUpdateError },
-  ] = useEditBookMutation();
+  const [updateBook, { isLoading: isUpdating, isError: isUpdateError }] =
+    useEditBookMutation();
+  const { refetch } = useGetBooksQuery();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,14 +45,13 @@ const EditBookForm = ({ book }: BookFormProps) => {
     };
     try {
       await updateBook(bookData);
-      if (isUpdateSuccess) {
-        toast.success("Book updated successfully!");
-        // console.log("Book Updated successfully");
-      }
       if (isUpdateError) {
         toast.error("Failed to update book. Please try again.");
         console.log("UPDATING ERROR ------------###---------");
       }
+      toast.success("Book updated successfully!");
+      refetch();
+      navigate({ to: "/books" });
     } catch (error) {
       console.error("Error submitting book data:", error);
       toast.error("Something went wrong. Please try again.");

@@ -10,15 +10,18 @@ import {
 import { Edit, ShoppingBag, Trash2Icon } from "lucide-react";
 import ActionButton from "./action-button";
 import { useNavigate } from "@tanstack/react-router";
-import { useDeleteBookMutation } from "../../redux/features/books/api.books";
+import {
+  useDeleteBookMutation,
+  useGetBooksQuery,
+} from "../../redux/features/books/api.books";
 import { toast } from "sonner";
 
 interface BookTableProps {
   books: Book[];
-  refetch?: any;
 }
 
-const BooksTable = ({ books, refetch }: BookTableProps) => {
+const BooksTable = ({ books }: BookTableProps) => {
+  const { refetch } = useGetBooksQuery();
   const navigate = useNavigate();
   const [deleteBook, { isError: failedDelete }] = useDeleteBookMutation();
 
@@ -79,15 +82,15 @@ const BooksTable = ({ books, refetch }: BookTableProps) => {
                 <TableCell>{book.copies}</TableCell>
                 <TableCell>{book.available ? "Yes" : "No"}</TableCell>
                 <TableCell className="flex items-end gap-2">
-                  <ActionButton icon={<ShoppingBag />} actionLabel="Borrow Book" />
+                  <ActionButton icon={<ShoppingBag />} title="Borrow Book" />
                   <ActionButton
                     icon={<Edit />}
-                    actionLabel="Edit Book"
+                    title="Edit Book"
                     onClick={() => handleEdit(book._id)}
                   />
                   <ActionButton
                     icon={<Trash2Icon />}
-                    actionLabel="Delete Book"
+                    title="Delete Book"
                     isDeleteButton
                     onClick={() => handleDelete(book._id)}
                   />
