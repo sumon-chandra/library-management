@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as CreateBookRouteImport } from './routes/create-book'
 import { Route as BooksRouteImport } from './routes/books'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EditBookBookIdRouteImport } from './routes/edit-book.$bookId'
 
+const CreateBookRoute = CreateBookRouteImport.update({
+  id: '/create-book',
+  path: '/create-book',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BooksRoute = BooksRouteImport.update({
   id: '/books',
   path: '/books',
@@ -32,35 +38,46 @@ const EditBookBookIdRoute = EditBookBookIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/books': typeof BooksRoute
+  '/create-book': typeof CreateBookRoute
   '/edit-book/$bookId': typeof EditBookBookIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/books': typeof BooksRoute
+  '/create-book': typeof CreateBookRoute
   '/edit-book/$bookId': typeof EditBookBookIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/books': typeof BooksRoute
+  '/create-book': typeof CreateBookRoute
   '/edit-book/$bookId': typeof EditBookBookIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/books' | '/edit-book/$bookId'
+  fullPaths: '/' | '/books' | '/create-book' | '/edit-book/$bookId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/books' | '/edit-book/$bookId'
-  id: '__root__' | '/' | '/books' | '/edit-book/$bookId'
+  to: '/' | '/books' | '/create-book' | '/edit-book/$bookId'
+  id: '__root__' | '/' | '/books' | '/create-book' | '/edit-book/$bookId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BooksRoute: typeof BooksRoute
+  CreateBookRoute: typeof CreateBookRoute
   EditBookBookIdRoute: typeof EditBookBookIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/create-book': {
+      id: '/create-book'
+      path: '/create-book'
+      fullPath: '/create-book'
+      preLoaderRoute: typeof CreateBookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/books': {
       id: '/books'
       path: '/books'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BooksRoute: BooksRoute,
+  CreateBookRoute: CreateBookRoute,
   EditBookBookIdRoute: EditBookBookIdRoute,
 }
 export const routeTree = rootRouteImport

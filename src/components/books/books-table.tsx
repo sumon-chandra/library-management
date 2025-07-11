@@ -38,7 +38,11 @@ const BooksTable = ({ books }: { books: Book[] }) => {
                 <TableCell>{book.author}</TableCell>
                 <TableCell>{book.genre}</TableCell>
                 <TableCell>{book.isbn}</TableCell>
-                <TableCell>{book.description}</TableCell>
+                <TableCell>
+                  {book.description.length > 50
+                    ? `${book.description.slice(0, 50)} ...`
+                    : book.description}
+                </TableCell>
                 <TableCell>{book.copies}</TableCell>
                 <TableCell>{book.available ? "Yes" : "No"}</TableCell>
                 <TableCell className="flex items-end gap-2">

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import BookForm from "../components/books/book-form";
+import EditBookForm from "../components/books/edit-book-form";
 import { useGetBookByIdQuery } from "../redux/features/books/api.books";
 import { Loader } from "lucide-react";
 
@@ -18,7 +18,7 @@ function EditBook() {
           <Loader className="animate-spin" />
         </div>
       ) : (
-        <BookForm editMode book={data?.data} />
+        <EditBookForm book={data?.data} />
       )}
     </div>
   );
