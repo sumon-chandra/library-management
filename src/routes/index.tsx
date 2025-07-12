@@ -54,7 +54,7 @@ export default function HomePage() {
                       <ArrowRight className="h-4 w-4" />
                     </Button>
                   </Link>
-                  <Link to="/">
+                  <Link to="/borrow-summary">
                     <Button variant="outline" size="lg" className="gap-2 cursor-pointer">
                       See Borrow Summary
                     </Button>

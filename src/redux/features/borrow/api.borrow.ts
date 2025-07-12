@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { GetBorrowResponse } from "../../../types";
 export const borrowApi = createApi({
     reducerPath: "borrowApi",
     baseQuery: fetchBaseQuery({ baseUrl: "https://a3-libraryapi.vercel.app/api/" }),
     endpoints: (builder) => ({
-        getBorrow: builder.query({
+        getBorrow: builder.query<GetBorrowResponse, void>({
             query: () => "borrow",
         }),
         // Mutation to add a new book

@@ -27,7 +27,7 @@ const BooksTableSkeleton = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Array.from({ length: 8 }).map((_, index) => (
+            {Array.from({ length: 20 }).map((_, index) => (
               <TableRow key={index}>
                 <TableCell>
                   <Skeleton className="h-4 w-12" />

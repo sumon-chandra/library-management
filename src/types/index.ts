@@ -22,3 +22,18 @@ export interface GetBookByIdResponse {
     message: string;
     data: Book;
 }
+
+export interface BorrowedBookEntry {
+    _id: string;
+    totalQuantity: number;
+    book: {
+        title: string;
+        isbn: string;
+    };
+};
+
+export interface GetBorrowResponse {
+    success: boolean;
+    message: string;
+    data: BorrowedBookEntry[];
+}
