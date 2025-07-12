@@ -1,8 +1,12 @@
 import { toast } from "sonner";
-import { useAddBorrowMutation } from "../../redux/features/borrow/api.borrow";
+import {
+  useAddBorrowMutation,
+  useGetBorrowQuery,
+} from "../../redux/features/borrow/api.borrow";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Loader } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
 
 interface BorrowFormProps {
   availableCopies: number;
@@ -11,6 +15,9 @@ interface BorrowFormProps {
 
 const BorrowForm = ({ availableCopies, bookId }: BorrowFormProps) => {
   const [addBorrow, { isError, error, isLoading }] = useAddBorrowMutation();
+  const { refetch } = useGetBorrowQuery();
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -28,6 +35,8 @@ const BorrowForm = ({ availableCopies, bookId }: BorrowFormProps) => {
       }
 
       toast.success("Book borrowed successfully.");
+      refetch();
+      navigate({ to: "/borrow-summary" });
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
       console.log("SOMETHING WENT WRONG WHILE ADDING BORROW");
