@@ -32,6 +32,13 @@ const BooksTable = ({ books }: BookTableProps) => {
     });
   };
 
+  const handleBorrow = (id: string) => {
+    navigate({
+      to: `/borrow/$bookId`,
+      params: { bookId: id },
+    });
+  };
+
   const handleDelete = async (id: string) => {
     try {
       await deleteBook(id);
@@ -82,7 +89,11 @@ const BooksTable = ({ books }: BookTableProps) => {
                 <TableCell>{book.copies}</TableCell>
                 <TableCell>{book.available ? "Yes" : "No"}</TableCell>
                 <TableCell className="flex items-end gap-2">
-                  <ActionButton icon={<ShoppingBag />} title="Borrow Book" />
+                  <ActionButton
+                    icon={<ShoppingBag />}
+                    title="Borrow Book"
+                    onClick={() => handleBorrow(book._id)}
+                  />
                   <ActionButton
                     icon={<Edit />}
                     title="Edit Book"

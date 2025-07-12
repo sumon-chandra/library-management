@@ -13,6 +13,7 @@ import { Route as CreateBookRouteImport } from './routes/create-book'
 import { Route as BooksRouteImport } from './routes/books'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EditBookBookIdRouteImport } from './routes/edit-book.$bookId'
+import { Route as BorrowBookIdRouteImport } from './routes/borrow.$bookId'
 
 const CreateBookRoute = CreateBookRouteImport.update({
   id: '/create-book',
@@ -34,17 +35,24 @@ const EditBookBookIdRoute = EditBookBookIdRouteImport.update({
   path: '/edit-book/$bookId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BorrowBookIdRoute = BorrowBookIdRouteImport.update({
+  id: '/borrow/$bookId',
+  path: '/borrow/$bookId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/books': typeof BooksRoute
   '/create-book': typeof CreateBookRoute
+  '/borrow/$bookId': typeof BorrowBookIdRoute
   '/edit-book/$bookId': typeof EditBookBookIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/books': typeof BooksRoute
   '/create-book': typeof CreateBookRoute
+  '/borrow/$bookId': typeof BorrowBookIdRoute
   '/edit-book/$bookId': typeof EditBookBookIdRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,33 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/books': typeof BooksRoute
   '/create-book': typeof CreateBookRoute
+  '/borrow/$bookId': typeof BorrowBookIdRoute
   '/edit-book/$bookId': typeof EditBookBookIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/books' | '/create-book' | '/edit-book/$bookId'
+  fullPaths:
+    | '/'
+    | '/books'
+    | '/create-book'
+    | '/borrow/$bookId'
+    | '/edit-book/$bookId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/books' | '/create-book' | '/edit-book/$bookId'
-  id: '__root__' | '/' | '/books' | '/create-book' | '/edit-book/$bookId'
+  to: '/' | '/books' | '/create-book' | '/borrow/$bookId' | '/edit-book/$bookId'
+  id:
+    | '__root__'
+    | '/'
+    | '/books'
+    | '/create-book'
+    | '/borrow/$bookId'
+    | '/edit-book/$bookId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BooksRoute: typeof BooksRoute
   CreateBookRoute: typeof CreateBookRoute
+  BorrowBookIdRoute: typeof BorrowBookIdRoute
   EditBookBookIdRoute: typeof EditBookBookIdRoute
 }
 
@@ -99,6 +120,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EditBookBookIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/borrow/$bookId': {
+      id: '/borrow/$bookId'
+      path: '/borrow/$bookId'
+      fullPath: '/borrow/$bookId'
+      preLoaderRoute: typeof BorrowBookIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -106,6 +134,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BooksRoute: BooksRoute,
   CreateBookRoute: CreateBookRoute,
+  BorrowBookIdRoute: BorrowBookIdRoute,
   EditBookBookIdRoute: EditBookBookIdRoute,
 }
 export const routeTree = rootRouteImport

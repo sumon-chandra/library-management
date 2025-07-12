@@ -3,6 +3,7 @@ import { useGetBooksQuery } from "../redux/features/books/api.books";
 import BooksTable from "../components/books/books-table";
 import BooksTableSkeleton from "../components/books/books-table-skeleton";
 import { Button } from "../components/ui/button";
+import NotFound from "../components/not-found";
 
 export const Route = createFileRoute("/books")({
   component: Books,
@@ -13,7 +14,7 @@ function Books() {
   return (
     <>
       {isLoading && <BooksTableSkeleton />}
-      {isError && <p>Error loading books</p>}
+      {isError && <NotFound url="/" btnLabel="Go to Home Page" />}
       {isSuccess && (
         <div>
           <h1 className="mb-4 text-2xl font-bold">Books</h1>
