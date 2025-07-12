@@ -9,7 +9,7 @@ import {
 } from "../ui/table";
 import { Edit, ShoppingBag, Trash2Icon } from "lucide-react";
 import ActionButton from "./action-button";
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import {
   useDeleteBookMutation,
   useGetBooksQuery,
@@ -77,7 +77,11 @@ const BooksTable = ({ books }: BookTableProps) => {
             {books.map((book, idx) => (
               <TableRow key={`${book.isbn}_${book._id}`}>
                 <TableCell>{idx + 1}</TableCell>
-                <TableCell>{book.title}</TableCell>
+                <TableCell className="hover:underline">
+                  <Link to="/book/$bookId" params={{ bookId: book._id }}>
+                    {book.title}
+                  </Link>
+                </TableCell>
                 <TableCell>{book.author}</TableCell>
                 <TableCell>{book.genre}</TableCell>
                 <TableCell>{book.isbn}</TableCell>
